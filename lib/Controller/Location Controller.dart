@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationController extends GetxController {
 
-  // লোকেশন পারমিশন হ্যান্ডেল করার ফাংশন
+  var userLat = 0.0.obs;
+  var userLng = 0.0.obs;
+
   Future<void> handleLocationPermission() async {
     LocationPermission permission = await Geolocator.checkPermission();
 
@@ -19,9 +23,14 @@ class LocationController extends GetxController {
       Get.snackbar("Permission Error", "Please enable location from settings.");
       return;
     }
+    else {
+      Position currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+      userLat.value = currentPosition.latitude;
+      userLng.value = currentPosition.longitude;
+      log("Latitude ${currentPosition.latitude.toString()}");
+      log("Longitude ${currentPosition.longitude.toString()}");
+    }
 
-    // পারমিশন ঠিক থাকলে হোম স্ক্রিনে নিয়ে যাবে
-    Get.offAllNamed('/home');
   }
 
   void skipToHome() {
