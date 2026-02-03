@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:task_soft/view/Home%20Screen/ui.dart';
 
 class LocationController extends GetxController {
 
@@ -34,6 +35,6 @@ class LocationController extends GetxController {
   }
 
   void skipToHome() {
-    Get.offAllNamed('/home');
+    Get.to(()=> HomeScreen());
   }
 }
